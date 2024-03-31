@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/questionnaire.css">
+</head>
+
+<body>
+    <header></header>
+    <div class="QA">
+        <div class="headline">
+            <h1>调查问卷</h1>
+        </div>
+        <hr width="900" color="orange">
+        <form id="questionnaireForm">
+            <ol>
+                <!-- Q1 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你是个体户吗? </b></li>
+                    </div>
+                    <div class="answer">
+                        <label><input type="radio" name="Q1" value="yes" required />&nbsp;&nbsp;是&nbsp;&nbsp; </label>
+                        <label><input type="radio" name="Q1" value="no" />&nbsp;&nbsp;不是&nbsp;&nbsp; </label>
+                    </div>
+                </div>
+                <!-- Q2 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你的公司或组织有多少员工? </b></li>
+                    </div>
+                    <div class="answer">
+                        <select name="Q2" class="select02" required>
+                            <option value="" selected disabled>请选择人数</option>
+                            <option value="1">0 - 25人</option>
+                            <option value="2">26 - 100人</option>
+                            <option value="3">101 - 500人</option>
+                            <option value="4">501 - 1000人</option>
+                            <option value="5">1000人以上</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你的雇主主要是一家科技公司/组织吗? </b></li>
+                    </div>
+                    <div class="answer">
+                        <label><input type="radio" name="Q3" value="yes" required />&nbsp;&nbsp;是&nbsp;&nbsp; </label>
+                        <label><input type="radio" name="Q3" value="no" />&nbsp;&nbsp;不是&nbsp;&nbsp; </label>
+                    </div>
+                </div>
+                <!-- Q45 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你远程工作吗? </b></li>
+                    </div>
+                    <div class="answer">
+                        <select name="Q44" class="select44" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="1">经常 </option>
+                            <option value="2">很少 </option>
+                            <option value="4">从来没有 </option>
+                        </select>
+                    </div>
+                </div>
+            </ol>
+            <button id="btn" type="button" onclick="submitForm()">提交问卷</button>
+        </form>
+    </div>
+
+    <script src="../js/questionnaire.js"></script>
+</body>
+
+</html>

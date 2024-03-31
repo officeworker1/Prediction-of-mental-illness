@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    body {
+        background-image: url(./resource/picture/sky_02.jpg);
+        background-size: cover;
+        background-attachment: fixed;
+        /* 设置背景图片位置为中心 */
+        background-position: center;
+
+        /* 可以去除默认的body内外边距 */
+        margin: 0;
+        padding: 0;
+
+        display: flex;
+        /* 设置主轴方向为垂直，子元素将垂直排列 */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .QA {
+        box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.52);
+        background-color: #fff;
+        margin-top: 50px;
+        margin-bottom: 100px;
+        padding: 10px;
+        padding-left: 80px;
+        padding-right: 80px;
+    }
+
+    hr {
+        height: 3px;
+    }
+
+    .headline {
+        text-align: center;
+        /* background-color: rgb(0, 0, 0); */
+        font-size: 1.25rem;
+    }
+
+    .headline h1 {
+        margin: 0;
+        color: orange;
+        padding-top: 30px;
+        /* background-color: blueviolet; */
+    }
+
+    .QA form {
+        /* background-color: darkcyan; */
+        /* 页面布局 */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .question {
+        margin: 10px;
+        padding: 0;
+        /* background-color: yellow; */
+        width: 850px;
+    }
+
+    .question-text b {
+        /* margin: 0; */
+        /* background-color: red; */
+        font-size: 1.25rem;
+    }
+
+    .question-text {
+        /* background-color: blue; */
+        padding: 10px;
+    }
+
+    .question select {
+        width: 100%;
+        height: 30px;
+        padding: 3px;
+        font-size: 1rem;
+    }
+
+    .answer {
+        /* background-color: green; */
+        padding: 10px;
+    }
+
+    .answer textarea {
+        font-size: 1.25rem;
+        resize: none;
+        outline: none;
+        border: none;
+        padding: 10px;
+        height: 200px;
+        width: 100%;
+        background-color: #efe3e3;
+    }
+
+    .answer #city1,
+    .answer #city2 {
+        margin-top: 10px;
+    }
+
+    #btn {
+        margin: 20px;
+        padding: 10px;
+        height: 40px;
+        width: 80px;
+    }
+</style>
+
+<body>
+    <header></header>
+    <div class="QA">
+        <div class="headline">
+            <h1>调查问卷</h1>
+        </div>
+        <hr width="900" color="orange">
+        <form action="http://localhost:5000/predict" onsubmit="submitForm(event)" method="post">
+            <ol>
+                <!-- Q1 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你是个体户吗? </b></li>
+                    </div>
+                    <div class="answer" id="data_01">
+                        <label><input type="radio" name="Q1" value="1" required />&nbsp;&nbsp;是&nbsp;&nbsp; </label>
+                        <label><input type="radio" name="Q1" value="0" />&nbsp;&nbsp;不是&nbsp;&nbsp; </label>
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你的公司或组织有多少员工? </b></li>
+                    </div>
+                    <div class="answer" id="data_02">
+                        <select name="Q2" class="select02" required>
+                            <option value="" selected disabled>请选择人数</option>
+                            <option value="1">0 - 25人</option>
+                            <option value="2">26 - 100人</option>
+                            <option value="3">101 - 500人</option>
+                            <option value="4">501 - 1000人</option>
+                            <option value="5">1000人以上</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你的雇主主要是一家科技公司/组织吗? </b></li>
+                    </div>
+                    <div class="answer" id="data_03">
+                        <label><input type="radio" name="Q3" value="1" required />&nbsp;&nbsp;是&nbsp;&nbsp; </label>
+                        <label><input type="radio" name="Q3" value="0" />&nbsp;&nbsp;不是&nbsp;&nbsp; </label>
+                    </div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你的雇主是否提供精神健康福利作为医疗保险的一部分? </b></li>
+                    </div>
+                    <div class="answer" id="data_04">
+                        <select name="Q4" class="select04" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="3">Yes </option>
+                            <option value="1">No </option>
+                            <option value="2">Not eligible for coverage / N/A </option>
+                            <option value="0">I don't know </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q5 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你知道在你的雇主提供的保险中有哪些心理健康保健的选择吗? </b></li>
+                    </div>
+                    <div class="answer" id="data_05">
+                        <select name="Q5" class="select05" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="2">是的，我知道 </option>
+                            <option value="1">不，我不知道 </option>
+                            <option value="0">我不确定 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q6 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你的雇主是否曾正式讨论过心理健康问题(例如，作为健康活动或其他官方交流的一部分)? </b></li>
+                    </div>
+                    <div class="answer" id="data_06">
+                        <select name="Q6" class="select06" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="2">是 </option>
+                            <option value="1">否 </option>
+                            <option value="0">我不知道 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q7 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你的雇主是否提供资源让你了解更多的心理健康问题和寻求帮助的选择? </b></li>
+                    </div>
+                    <div class="answer" id="data_07">
+                        <select name="Q7" class="select07" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="2">是 </option>
+                            <option value="1">否 </option>
+                            <option value="0">我不知道 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q8 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>如果你选择利用雇主提供的精神健康或药物滥用治疗资源，你的匿名性是否受到保护? </b></li>
+                    </div>
+                    <div class="answer" id="data_08">
+                        <select name="Q8" class="select08" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="2">是 </option>
+                            <option value="1">否 </option>
+                            <option value="0">我不知道 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q9 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>如果精神健康问题促使你请病假，请病假将是: </b></li>
+                    </div>
+                    <div class="answer" id="data_09">
+                        <select name="Q9" class="select09" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="5">非常简单 </option>
+                            <option value="3">可能会简单 </option>
+                            <option value="1">没有影响 </option>
+                            <option value="2">稍微困难 </option>
+                            <option value="4">非常困难 </option>
+                            <option value="0">我不知道是否有影响 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q10 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你认为和你的雇主讨论精神疾病会有负面影响吗? </b></li>
+                    </div>
+                    <div class="answer" id="data_10">
+                        <select name="Q10" class="select10" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="2">是 </option>
+                            <option value="1">否 </option>
+                            <option value="0">可能有 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q11 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你认为与雇主讨论身体健康问题会产生负面影响吗? </b></li>
+                    </div>
+                    <div class="answer" id="data_11">
+                        <select name="Q11" class="select11" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="2">是 </option>
+                            <option value="1">否 </option>
+                            <option value="0">可能有 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q12 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你愿意和你的同事讨论精神疾病吗? </b></li>
+                    </div>
+                    <div class="answer" id="data_12">
+                        <select name="Q12" class="select12" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="2">愿意 </option>
+                            <option value="1">不愿意 </option>
+                            <option value="0">可能愿意 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q13 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你愿意和你的直接主管讨论心理健康障碍吗? </b></li>
+                    </div>
+                    <div class="answer" id="data_13">
+                        <select name="Q13" class="select13" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="2">愿意 </option>
+                            <option value="1">不愿意 </option>
+                            <option value="0">可能愿意 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q14 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你觉得你的雇主是否像对待身体健康一样重视心理健康? </b></li>
+                    </div>
+                    <div class="answer" id="data_14">
+                        <select name="Q14" class="select14" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="2">是 </option>
+                            <option value="1">否 </option>
+                            <option value="0">我不知道 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q15 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你是否听说过或观察到在工作场所公开谈论心理健康问题的同事所带来的负面影响? </b></li>
+                    </div>
+                    <div class="answer" id="data_15">
+                        <select name="Q15" class="select15" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="1">是 </option>
+                            <option value="0">否 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q16 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你以前有过雇主吗? </b></li>
+                    </div>
+                    <div class="answer" id="data_16">
+                        <label><input type="radio" name="Q16" value="1" required />&nbsp;&nbsp;是&nbsp;&nbsp; </label>
+                        <label><input type="radio" name="Q16" value="0" />&nbsp;&nbsp;不是&nbsp;&nbsp; </label>
+                    </div>
+                </div>
+
+                <!-- Q17 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你以前的雇主提供心理健康福利吗? </b></li>
+                    </div>
+                    <div class="answer" id="data_17">
+                        <select name="Q17" class="select17" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="3">是，他们都提供过相关福利 </option>
+                            <option value="1">否，他们都没有提供过相关福利 </option>
+                            <option value="2">部分提供过相关福利 </option>
+                            <option value="0">我不知道 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q18 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你知道你以前的雇主提供的心理健康护理方案吗? </b></li>
+                    </div>
+                    <div class="answer" id="data_18">
+                        <select name="Q18" class="select18" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="3">是的，我都知道 </option>
+                            <option value="0">我知道有些 </option>
+                            <option value="1">目前不知道 </option>
+                            <option value="2">没有，我是后来才意识到的 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q19 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你以前的雇主是否正式讨论过心理健康问题(作为健康活动或其他官方交流的一部分)? </b></li>
+                    </div>
+                    <div class="answer" id="data_19">
+                        <select name="Q19" class="select19" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="3">是，他们都讨论过 </option>
+                            <option value="1">否，他们都没有讨论过 </option>
+                            <option value="2">部分讨论过 </option>
+                            <option value="0">我不知道 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q20 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你以前的雇主是否提供资源让你了解更多的心理健康问题以及如何寻求帮助? </b></li>
+                    </div>
+                    <div class="answer" id="data_20">
+                        <select name="Q20" class="select20" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="3">是，他们都提供过 </option>
+                            <option value="1">否，他们都没有提供过 </option>
+                            <option value="2">部分提供过 </option>
+                            <option value="0">我不知道 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q21 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>如果你选择利用前雇主提供的精神健康或药物滥用治疗资源，你的匿名性是否得到保护? </b></li>
+                    </div>
+                    <div class="answer" id="data_21">
+                        <select name="Q21" class="select21" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="3">是，经常得到保护 </option>
+                            <option value="1">否，没有得到保护 </option>
+                            <option value="2">有时会得到保护 </option>
+                            <option value="0">我不知道 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q22 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你认为和以前的雇主讨论精神疾病会有负面影响吗? </b></li>
+                    </div>
+                    <div class="answer" id="data_22">
+                        <select name="Q22" class="select22" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="3">是，和他们讨论都有负面影响 </option>
+                            <option value="1">否，和他们讨论没有负面影响 </option>
+                            <option value="2">部分讨论有负面影响 </option>
+                            <option value="0">我不知道 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q23 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你认为和以前的雇主讨论身体健康问题会有负面影响吗? </b></li>
+                    </div>
+                    <div class="answer" id="data_23">
+                        <select name="Q23" class="select23" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="2">是，和他们讨论都有负面影响 </option>
+                            <option value="0">否，和他们讨论没有负面影响 </option>
+                            <option value="1">部分讨论有负面影响 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q24 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你愿意和你以前的同事讨论心理健康问题吗? </b></li>
+                    </div>
+                    <div class="answer" id="data_24">
+                        <select name="Q24" class="select24" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="2">是的，我以前所有的同事我都愿意和ta讨论 </option>
+                            <option value="0">没有，我以前的同事我都不愿意讨论 </option>
+                            <option value="1">愿意和我以前的一些同事讨论 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q25 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你是否愿意与你的直接上司讨论心理健康问题? </b></li>
+                    </div>
+                    <div class="answer" id="data_25">
+                        <select name="Q25" class="select25" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="3">是的，我以前所有的直接上司我都愿意和ta讨论 </option>
+                            <option value="1">没有，我以前的直接上司我都不愿意讨论 </option>
+                            <option value="2">愿意和我以前的一些直接上司讨论 </option>
+                            <option value="0">我不知道 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q26 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你觉得你以前的雇主把心理健康看得和身体健康一样重要吗? </b></li>
+                    </div>
+                    <div class="answer" id="data_26">
+                        <select name="Q26" class="select26" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="3">是，他们都把心理健康看得和身体健康一样重要 </option>
+                            <option value="1">否，他们没有把心理健康看得和身体健康一样重要 </option>
+                            <option value="2">有一些雇主把心理健康看得和身体健康一样重要 </option>
+                            <option value="0">我不知道 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q27 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>在以前的工作中，你是否听说过或观察到有心理健康问题的同事带来的负面影响? </b></li>
+                    </div>
+                    <div class="answer" id="data_27">
+                        <select name="Q27" class="select27" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="2">是，听说过或观察到有心理健康问题的同事带来的负面影响 </option>
+                            <option value="0">否，没有听说过或观察到有心理健康问题的同事带来的负面影响 </option>
+                            <option value="1">听说过或观察部分有心理健康问题的同事带来的负面影响 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q28 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你愿意在面试中向潜在雇主提出身体健康问题吗? </b></li>
+                    </div>
+                    <div class="answer" id="data_28">
+                        <label><input type="radio" name="Q28" value="1" required />&nbsp;&nbsp;愿意&nbsp;&nbsp; </label>
+                        <label><input type="radio" name="Q28" value="0" />&nbsp;&nbsp;拒绝&nbsp;&nbsp; </label>
+                        <br>
+                        <b>为什么或为什么不 </b><br>
+                        <textarea name="Q28" id="text_28" cols="30" rows="10" placeholder="请输入原因"></textarea>
+                    </div>
+                </div>
+
+                <!-- Q29 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你会在面试中向潜在雇主提出心理健康问题吗? </b></li>
+                    </div>
+                    <div class="answer" id="data_29">
+                        <label><input type="radio" name="Q29" value="1" required />&nbsp;&nbsp;会&nbsp;&nbsp; </label>
+                        <label><input type="radio" name="Q29" value="0" />&nbsp;&nbsp;不会&nbsp;&nbsp; </label>
+                        <br>
+                        <b>为什么或为什么不 </b><br>
+                        <textarea name="Q29" id="text_29" cols="30" rows="10" placeholder="请输入原因"></textarea>
+                    </div>
+                </div>
+
+                <!-- Q30 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你觉得被认定为有心理健康问题的人会影响你的职业生涯吗? </b></li>
+                    </div>
+                    <div class="answer" id="data_30">
+                        <select name="Q30" class="select30" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="3">是的，我想会的 </option>
+                            <option value="1">不，我不这么认为 </option>
+                            <option value="0">可能会 </option>
+                            <option value="2">不，没有 </option>
+                            <option value="4">是的，有 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q31 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你认为如果团队成员/同事知道你有心理健康问题，他们会更消极地看待你吗? </b></li>
+                    </div>
+                    <div class="answer" id="data_31">
+                        <select name="Q31" class="select31" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="4">是，他们会 </option>
+                            <option value="3">是，我认为他们会 </option>
+                            <option value="2">否，他们不会 </option>
+                            <option value="1">否，我认为他们不会 </option>
+                            <option value="0">他们可能会 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q32 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你有多愿意与朋友和家人分享你患有精神疾病? </b></li>
+                    </div>
+                    <div class="answer" id="data_32">
+                        <select name="Q32" class="select32" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="5">非常愿意 </option>
+                            <option value="4">一般般愿意 </option>
+                            <option value="0">既没有不愿意也没有愿意 </option>
+                            <option value="3">一般般不愿意 </option>
+                            <option value="2">非常不愿意 </option>
+                            <option value="1">不适用于我(我没有精神疾病) </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q33 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>在现在或以前的工作场所，你是否观察到或经历过对心理健康问题的不支持或处理不当的反应? </b></li>
+                    </div>
+                    <div class="answer" id="data_33">
+                        <select name="Q33" class="select33" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="2">是，我经历过 </option>
+                            <option value="3">是，我观察过 </option>
+                            <option value="1">否 </option>
+                            <option value="0">不确定 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q34 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你有家族精神病史吗? </b></li>
+                    </div>
+                    <div class="answer" id="data_34">
+                        <select name="Q34" class="select34" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="2">有 </option>
+                            <option value="1">没有 </option>
+                            <option value="0">我不知道 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q35 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你过去有过精神疾病吗? </b></li>
+                    </div>
+                    <div class="answer" id="data_35">
+                        <select name="Q35" class="select35" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="2">有 </option>
+                            <option value="1">没有 </option>
+                            <option value="0">可能 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q36 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你目前有精神疾病吗? </b></li>
+                    </div>
+                    <div class="answer" id="data_36">
+                        <select name="Q36" class="select36" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="2">有 </option>
+                            <option value="1">没有 </option>
+                            <option value="0">可能 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q37 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你是否被医学专家诊断出有精神健康问题? </b></li>
+                    </div>
+                    <div class="answer" id="data_37">
+                        <select name="Q37" class="select37" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="1">有 </option>
+                            <option value="0">否 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q38 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你曾经寻求过心理健康专家的治疗吗? </b></li>
+                    </div>
+                    <div class="answer" id="data_38">
+                        <label><input type="radio" name="Q38" value="1" required />&nbsp;&nbsp;是&nbsp;&nbsp; </label>
+                        <label><input type="radio" name="Q38" value="0" />&nbsp;&nbsp;否&nbsp;&nbsp; </label>
+                    </div>
+                </div>
+
+                <!-- Q39 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>如果你有心理健康问题，当你得到有效治疗时，你是否觉得它会干扰你的工作? </b></li>
+                    </div>
+                    <div class="answer" id="data_39">
+                        <select name="Q39" class="select39" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="2">经常 </option>
+                            <option value="4">间或 </option>
+                            <option value="3">很少 </option>
+                            <option value="0">从来没有 </option>
+                            <option value="1">对我不适用 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q40 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>如果你有心理健康问题，如果没有得到有效的治疗，你会觉得它会影响你的工作吗? </b></li>
+                    </div>
+                    <div class="answer" id="data_40">
+                        <select name="Q40" class="select40" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="2">经常 </option>
+                            <option value="4">间或 </option>
+                            <option value="3">很少 </option>
+                            <option value="0">从来没有 </option>
+                            <option value="1">对我不适用 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q41 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你的性别是什么? </b></li>
+                    </div>
+                    <div class="answer" id="data_41">
+                        <label><input type="radio" name="Q41" value="0" required />&nbsp;&nbsp;男性&nbsp;&nbsp;
+                        </label>
+                        <label><input type="radio" name="Q41" value="1" />&nbsp;&nbsp;女性&nbsp;&nbsp; </label>
+                    </div>
+                </div>
+
+                <!-- Q42 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你住在哪里? </b></li>
+                    </div>
+                    <div class="answer" id="data_42">
+                        <!-- 一级菜单：省份 -->
+                        <select id="province1" onchange="updateCities1()" name="Q42" required>
+                            <option value="" selected disabled>请选择省份</option>
+                            <option value="beijing">北京市</option>
+                            <option value="tianjin">天津市</option>
+                            <option value="hebei">河北省</option>
+                            <option value="shanxi1">山西省</option>
+                            <option value="neimenggu">内蒙古自治区</option>
+                            <option value="liaoning">辽宁省</option>
+                            <option value="jilin">吉林省</option>
+                            <option value="heilongjiang">黑龙江省</option>
+                            <option value="shanghai">上海市</option>
+                            <option value="jiangsu">江苏省</option>
+                            <option value="zhejiang">浙江省</option>
+                            <option value="anhui">安徽省</option>
+                            <option value="fujian">福建省</option>
+                            <option value="jiangxi">江西省</option>
+                            <option value="shandong">山东省</option>
+                            <option value="henan">河南省</option>
+                            <option value="hubei">湖北省</option>
+                            <option value="hunan">湖南省</option>
+                            <option value="guangdong">广东省</option>
+                            <option value="guangxi">广西壮族自治区</option>
+                            <option value="hainan">海南省</option>
+                            <option value="chongqing">重庆市</option>
+                            <option value="sichuan">四川省</option>
+                            <option value="guizhou">贵州省</option>
+                            <option value="yunnan">云南省</option>
+                            <option value="xizang">西藏自治区</option>
+                            <option value="shanxi2">陕西省</option>
+                            <option value="gansu">甘肃省</option>
+                            <option value="qinghai">青海省</option>
+                            <option value="ningxia">宁夏回族自治区</option>
+                            <option value="xinjiang">新疆维吾尔自治区</option>
+                            <option value="xianggang">香港特别行政区</option>
+                            <option value="aomen">澳门特别行政区</option>
+                            <option value="taiwan">台湾省</option>
+                        </select><br>
+
+                        <!-- 二级菜单：城市 -->
+                        <select id="city1" name="Q42">
+                            <option value="" selected disabled>请选择城市</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q43 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你在哪里工作? </b></li>
+                    </div>
+                    <div class="answer"  id="data_43">
+                        <!-- 一级菜单：省份 -->
+                        <select id="province2" onchange="updateCities2()" name="Q43">
+                            <option value="" selected disabled>请选择省份</option>
+                            <option value="beijing">北京市</option>
+                            <option value="tianjin">天津市</option>
+                            <option value="hebei">河北省</option>
+                            <option value="shanxi1">山西省</option>
+                            <option value="neimenggu">内蒙古自治区</option>
+                            <option value="liaoning">辽宁省</option>
+                            <option value="jilin">吉林省</option>
+                            <option value="heilongjiang">黑龙江省</option>
+                            <option value="shanghai">上海市</option>
+                            <option value="jiangsu">江苏省</option>
+                            <option value="zhejiang">浙江省</option>
+                            <option value="anhui">安徽省</option>
+                            <option value="fujian">福建省</option>
+                            <option value="jiangxi">江西省</option>
+                            <option value="shandong">山东省</option>
+                            <option value="henan">河南省</option>
+                            <option value="hubei">湖北省</option>
+                            <option value="hunan">湖南省</option>
+                            <option value="guangdong">广东省</option>
+                            <option value="guangxi">广西壮族自治区</option>
+                            <option value="hainan">海南省</option>
+                            <option value="chongqing">重庆市</option>
+                            <option value="sichuan">四川省</option>
+                            <option value="guizhou">贵州省</option>
+                            <option value="yunnan">云南省</option>
+                            <option value="xizang">西藏自治区</option>
+                            <option value="shanxi2">陕西省</option>
+                            <option value="gansu">甘肃省</option>
+                            <option value="qinghai">青海省</option>
+                            <option value="ningxia">宁夏回族自治区</option>
+                            <option value="xinjiang">新疆维吾尔自治区</option>
+                            <option value="xianggang">香港特别行政区</option>
+                            <option value="aomen">澳门特别行政区</option>
+                            <option value="taiwan">台湾省</option>
+                        </select><br>
+
+                        <!-- 二级菜单：城市 -->
+                        <select id="city2" name="Q43">
+                            <option value="" selected disabled>请选择城市</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q44 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>以下哪项最能描述你的工作职位? </b></li>
+                    </div>
+                    <div class="answer"  id="data_44">
+                        <select name="Q44" class="select44" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="1">后端开发者</option>
+                            <option value="2">后端开发者|开发者倡导者/拥护者</option>
+                            <option value="3">后端开发者|开发者倡导者/拥护者|主管/团队领导</option>
+                            <option value="4">后端开发者|DevOps/系统管理员</option>
+                            <option value="5">后端开发者|DevOps/系统管理员|开发者倡导者/拥护者|主管/团队领导</option>
+                            <option value="6">后端开发者|DevOps/系统管理员|主管/团队领导</option>
+                            <option value="7">后端开发者|DevOps/系统管理员|主管/团队领导|执行领导</option>
+                            <option value="8">后端开发者|DevOps/系统管理员|主管/团队领导|其他</option>
+                            <option value="9">后端开发者|前端开发者</option>
+                            <option value="10">后端开发者|前端开发者|设计师</option>
+                            <option value="11">后端开发者|前端开发者|个人开发者</option>
+                            <option value="12">后端开发者|个人开发者</option>
+                            <option value="13">后端开发者|主管/团队领导</option>
+                            <option value="14">后端开发者|主管/团队领导|其他</option>
+                            <option value="15">后端开发者|支持|DevOps/系统管理员</option>
+                            <option value="16">后端开发者|支持|主管/团队领导</option>
+                            <option value="17">设计师</option>
+                            <option value="18">设计师 | 前端开发人员</option>
+                            <option value="19">设计师 | 前端开发人员 | 后端开发人员</option>
+                            <option value="20">设计师 | 前端开发人员 | 后端开发人员 | DevOps/SysAdmin</option>
+                            <option value="21">设计师 | 前端开发人员 | 后端开发人员 | DevOps/SysAdmin | 其他</option>
+                            <option value="22">设计师 | 前端开发人员 | 后端开发人员 | 执行领导 | 其他</option>
+                            <option value="23">设计师 | 前端开发人员 | 后端开发人员 | 其他</option>
+                            <option value="24">设计师 | 前端开发人员 | 后端开发人员 | 销售 | 督导/团队领导</option>
+                            <option value="25">设计师 | 前端开发人员 | 后端开发人员 | 督导/团队领导</option>
+                            <option value="26">设计师 | 前端开发人员 | 后端开发人员 | 督导/团队领导 | 执行领导</option>
+                            <option value="27">设计师 | 前端开发人员 | 后端开发人员 | 支持 | DevOps/SysAdmin | 督导/团队领导</option>
+                            <option value="28">设计师 | 个体经营者</option>
+                            <option value="29">设计师 | 督导/团队领导</option>
+                            <option value="30">设计师 | 支持 | 督导/团队领导</option>
+
+
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Q45 -->
+                <div class="question">
+                    <div class="question-text">
+                        <li><b>你远程工作吗? </b></li>
+                    </div>
+                    <div class="answer"  id="data_45">
+                        <select name="Q45" class="select45" required>
+                            <option value="" selected disabled>请选择</option>
+                            <option value="0">经常 </option>
+                            <option value="2">有时 </option>
+                            <option value="1">从来没有 </option>
+                        </select>
+                    </div>
+                </div>
+            </ol>
+            <button id="btn" type="submit" onclick="generateJSON()">提交问卷</button>
+        </form>
+        <pre id="jsonOutput"></pre>
+        <div id="resultContainer"></div>
+
+    </div>
+
+    <script>
+        // 城市数据，可以根据实际情况添加更多城市
+        const citiesData = {
+            beijing: ['东城区', '西城区', '朝阳区', '丰台区', '海淀区', '石景山区', '门头沟区', '房山区', '通州区', '顺义区', '昌平区', '大兴区', '怀柔区', '平谷区', '密云区', '延庆区'],
+            guangdong: ['东莞市', '广州市', '中山市', '深圳市', '惠州市', '江门市', '珠海市', '汕头市', '佛山市', '湛江市', '河源市', '肇庆市', '潮州市', '清远市', '韶关市', '揭阳市', '阳江市', '云浮市', '茂名市', '梅州市', '汕尾市'],
+            shandong: ['济南市', '青岛市', '临沂市', '济宁市', '菏泽市', '烟台市', '泰安市', '淄博市', '潍坊市', '日照市', '威海市', '滨州市', '东营市', '聊城市', '德州市', '莱芜市', '枣庄市'],
+            jiangsu: ['苏州市', '徐州市', '盐城市', '无锡市', '南京市', '南通市', '连云港市', '常州市', '扬州市', '镇江市', '淮安市', '泰州市', '宿迁市'],
+            henan: ['郑州市', '南阳市', '新乡市', '安阳市', '洛阳市', '信阳市', '平顶山市', '周口市', '商丘市', '开封市', '焦作市', '驻马店市', '濮阳市', '三门峡市', '漯河市', '许昌市', '鹤壁市', '济源市'],
+            shanghai: ['松江区', '宝山区', '金山区', '嘉定区', '南汇区', '青浦区', '浦东新区', '奉贤区', '闵行区', '徐汇区', '静安区', '黄浦区', '普陀区', '杨浦区', '虹口区', '闸北区', '长宁区', '崇明县', '卢湾区'],
+            hebei: ['石家庄市', '唐山市', '保定市', '邯郸市', '邢台市', '河北区', '沧州市', '秦皇岛市', '张家口市', '衡水市', '廊坊市', '承德市'],
+            zhejiang: ['温州市', '宁波市', '杭州市', '台州市', '嘉兴市', '金华市', '湖州市', '绍兴市', '舟山市', '丽水市', '衢州市'],
+            xianggang: ['香港岛', '九龙', '新界'],
+            shanxi1: ['西安市', '咸阳市', '宝鸡市', '汉中市', '渭南市', '安康市', '榆林市', '商洛市', '延安市', '铜川市'],
+            hunan: ['长沙市', '邵阳市', '常德市', '衡阳市', '株洲市', '湘潭市', '永州市', '岳阳市', '怀化市', '郴州市', '娄底市', '益阳市', '张家界市', '湘西州'],
+            chongqing: ['江北区', '渝北区', '沙坪坝区', '九龙坡区', '万州区', '永川市', '南岸区', '酉阳县', '北碚区', '涪陵区', '秀山县', '巴南区', '渝中区', '石柱县', '忠县', '合川市', '大渡口区', '开县', '长寿区', '荣昌县', '云阳县', '梁平县', '潼南县', '江津市', '彭水县', '璧山县', '綦江县', '大足县', '黔江区', '巫溪县', '巫山县', '垫江县', '丰都县', '武隆县', '万盛区', '铜梁县', '南川市', '奉节县', '双桥区', '城口县'],
+            fujian: ['漳州市', '泉州市', '厦门市', '福州市', '莆田市', '宁德市', '三明市', '南平市', '龙岩市'],
+            tianjin: ['和平区', '北辰区', '河北区', '河西区', '西青区', '津南区', '东丽区', '武清区', '宝坻区', '红桥区', '大港区', '汉沽区', '静海县', '宁河县', '塘沽区', '蓟县', '南开区', '河东区'],
+            yunnan: ['昆明市', '红河州', '大理州', '文山州', '德宏州', '曲靖市', '昭通市', '楚雄州', '保山市', '玉溪市', '丽江地区', '临沧地区', '思茅地区', '西双版纳州', '怒江州', '迪庆州'],
+            sichuan: ['成都市', '绵阳市', '广元市', '达州市', '南充市', '德阳市', '广安市', '阿坝州', '巴中市', '遂宁市', '内江市', '凉山州', '攀枝花市', '乐山市', '自贡市', '泸州市', '雅安市', '宜宾市', '资阳市', '眉山市', '甘孜州'],
+            guangxi: ['贵港市', '玉林市', '北海市', '南宁市', '柳州市', '桂林市', '梧州市', '钦州市', '来宾市', '河池市', '百色市', '贺州市', '崇左市', '防城港市'],
+            anhui: ['芜湖市', '合肥市', '六安市', '宿州市', '阜阳市', '安庆市', '马鞍山市', '蚌埠市', '淮北市', '淮南市', '宣城市', '黄山市', '铜陵市', '亳州市', '池州市', '巢湖市', '滁州市'],
+            hainan: ['三亚市', '海口市', '琼海市', '文昌市', '东方市', '昌江县', '陵水县', '乐东县', '五指山市', '保亭县', '澄迈县', '万宁市', '儋州市', '临高县', '白沙县', '定安县', '琼中县'],
+            jiangxi: ['南昌市', '赣州市', '上饶市', '吉安市', '九江市', '新余市', '抚州市', '宜春市', '景德镇市', '萍乡市', '鹰潭市'],
+            hubei: ['武汉市', '宜昌市', '襄樊市', '荆州市', '恩施州', '孝感市', '黄冈市', '十堰市', '咸宁市', '黄石市', '仙桃市', '随州市', '天门市', '荆门市', '潜江市', '鄂州市', '神农架林区'],
+            shanxi2: ['太原市', '大同市', '运城市', '长治市', '晋城市', '忻州市', '临汾市', '吕梁市', '晋中市', '阳泉市', '朔州市'],
+            liaoning: ['大连市', '沈阳市', '丹东市', '辽阳市', '葫芦岛市', '锦州市', '朝阳市', '营口市', '鞍山市', '抚顺市', '阜新市', '本溪市', '盘锦市', '铁岭市'],
+            taiwan: ['台北市', '高雄市', '台中市', '新竹市', '基隆市', '台南市', '嘉义市'],
+            heilongjiang: ['齐齐哈尔市', '哈尔滨市', '大庆市', '佳木斯市', '双鸭山市', '牡丹江市', '鸡西市', '黑河市', '绥化市', '鹤岗市', '伊春市', '大兴安岭地区', '七台河市'],
+            neimenggu: ['赤峰市', '包头市', '通辽市', '呼和浩特市', '乌海市', '鄂尔多斯市', '呼伦贝尔市', '兴安盟', '巴彦淖尔盟', '乌兰察布盟', '锡林郭勒盟', '阿拉善盟'],
+            aomen: ['澳门半岛', '氹仔岛', '路环岛'],
+            guizhou: ['贵阳市', '黔东南州', '黔南州', '遵义市', '黔西南州', '毕节地区', '铜仁地区', '安顺市', '六盘水市'],
+            gansu: ['兰州市', '天水市', '庆阳市', '武威市', '酒泉市', '张掖市', '陇南地区', '白银市', '定西地区', '平凉市', '嘉峪关市', '临夏回族自治州', '金昌市', '甘南州'],
+            qinghai: ['西宁市', '海西州', '海东地区', '海北州', '果洛州', '玉树州', '黄南藏族自治州'],
+            xinjiang: ['乌鲁木齐市', '伊犁州', '昌吉州', '石河子市', '哈密地区', '阿克苏地区', '巴音郭楞州', '喀什地区', '塔城地区', '克拉玛依市', '和田地区', '阿勒泰州', '吐鲁番地区', '阿拉尔市', '博尔塔拉州', '五家渠市', '克孜勒苏州', '图木舒克市'],
+            xizang: ['拉萨市', '山南地区', '林芝地区', '日喀则地区', '阿里地区', '昌都地区', '那曲地区'],
+            jilin: ['吉林市', '长春市', '白山市', '白城市', '延边州', '松原市', '辽源市', '通化市', '四平市'],
+            ningxia: ['银川市', '吴忠市', '中卫市', '石嘴山市', '固原市']
+        };
+
+
+        function updateCities1() {
+            const provinceSelect = document.getElementById('province1');
+            const citySelect = document.getElementById('city1');
+
+            // 获取选中的省份
+            const selectedProvince = provinceSelect.value;
+
+            // 清空城市列表
+            citySelect.innerHTML = '<option value="" selected disabled>请选择城市</option>';
+
+            // 如果选中了省份，则添加相应省份的城市到城市列表
+            if (selectedProvince && citiesData[selectedProvince]) {
+                citiesData[selectedProvince].forEach(city => {
+                    const option = document.createElement('option');
+                    option.value = city;
+                    option.textContent = city;
+                    citySelect.appendChild(option);
+                });
+            }
+        }
+
+        function updateCities2() {
+            const provinceSelect = document.getElementById('province2');
+            const citySelect = document.getElementById('city2');
+
+            // 获取选中的省份
+            const selectedProvince = provinceSelect.value;
+
+            // 清空城市列表
+            citySelect.innerHTML = '<option value="" selected disabled>请选择城市</option>';
+
+            // 如果选中了省份，则添加相应省份的城市到城市列表
+            if (selectedProvince && citiesData[selectedProvince]) {
+                citiesData[selectedProvince].forEach(city => {
+                    const option = document.createElement('option');
+                    option.value = city;
+                    option.textContent = city;
+                    citySelect.appendChild(option);
+                });
+            }
+        }
+
+        function submitForm(event) {
+    // 阻止表单的默认提交行为
+    event.preventDefault();
+
+    // 获取表单数据
+    var formData = {
+        self_empl_flag: document.getElementById('data_01').querySelector('input[name="Q1"]:checked').value,
+                comp_no_empl: document.getElementById('data_02').querySelector('select').value,
+                tech_comp_flag: document.getElementById('data_03').querySelector('input[name="Q3"]:checked').value,
+                mh_coverage_flag: document.getElementById('data_04').querySelector('select').value,
+                mh_coverage_awareness_flag: document.getElementById('data_05').querySelector('select').value,
+                mh_employer_discussion: document.getElementById('data_06').querySelector('select').value,
+                mh_resources_provided: document.getElementById('data_07').querySelector('select').value,
+                mh_anonimity_flag: document.getElementById('data_08').querySelector('select').value,
+                mh_medical_leave: document.getElementById('data_09').querySelector('select').value,
+                mh_discussion_neg_impact: document.getElementById('data_10').querySelector('select').value,
+                ph_discussion_neg_impact: document.getElementById('data_11').querySelector('select').value,
+                mh_discussion_cowork: document.getElementById('data_12').querySelector('select').value,
+                mh_discussion_supervis: document.getElementById('data_13').querySelector('select').value,
+                mh_eq_ph_employer: document.getElementById('data_14').querySelector('select').value,
+                mh_conseq_coworkers: document.getElementById('data_15').querySelector('select').value,
+                prev_employers_flag: document.getElementById('data_16').querySelector('input[name="Q16"]:checked').value,
+                prev_mh_benefits: document.getElementById('data_17').querySelector('select').value,
+                prev_mh_benefits_awareness: document.getElementById('data_18').querySelector('select').value,
+                prev_mh_discussion: document.getElementById('data_19').querySelector('select').value,
+                prev_mh_resources: document.getElementById('data_20').querySelector('select').value,
+                prev_mh_anonimity: document.getElementById('data_21').querySelector('select').value,
+                prev_mh_discuss_neg_conseq: document.getElementById('data_22').querySelector('select').value,
+                prev_ph_discuss_neg_conseq: document.getElementById('data_23').querySelector('select').value,
+                prev_mh_discussion_cowork: document.getElementById('data_24').querySelector('select').value,
+                prev_mh_discussion_supervisor: document.getElementById('data_25').querySelector('select').value,
+                prev_mh_importance_employer: document.getElementById('data_26').querySelector('select').value,
+                prev_mh_conseq_coworkers: document.getElementById('data_27').querySelector('select').value,
+                future_ph_specification: document.getElementById('data_28').querySelector('input[name="Q28"]:checked').value,
+                "why/ why_not": document.getElementById('text_28').value,
+                future_mh_specification: document.getElementById('data_29').querySelector('input[name="Q29"]:checked').value,
+                "why / why_not2": document.getElementById('text_29').value,
+                mh_hurt_on_career: document.getElementById('data_30').querySelector('select').value,
+                mh_neg_view_cowork: document.getElementById('data_31').querySelector('select').value,
+                "mh_sharing_friends / fam_flag": document.getElementById('data_32').querySelector('select').value,
+                mh_bad_response_workplace: document.getElementById('data_33').querySelector('select').value,
+                mh_family_hist: document.getElementById('data_34').querySelector('select').value,
+                mh_disorder_past: document.getElementById('data_35').querySelector('select').value,
+                mh_disorder_current: document.getElementById('data_36').querySelector('select').value,
+                mh_diagnos_proffesional: document.getElementById('data_37').querySelector('select').value,
+                mh_sought_proffes_treatm: document.getElementById('data_38').querySelector('input[name="Q38"]:checked').value,
+                mh_eff_treat_impact_on_work: document.getElementById('data_39').querySelector('select').value,
+                mh_not_eff_treat_impact_on_work: document.getElementById('data_40').querySelector('select').value,
+                sex: document.getElementById('data_41').querySelector('input[name="Q41"]:checked').value,
+
+                province_live: document.getElementById('province1').value,
+                city_live: document.getElementById('city1').value,
+
+                province_work: document.getElementById('province2').value,
+                city_work: document.getElementById('city2').value,
+
+
+                work_position: document.getElementById('data_44').querySelector('select').value,
+                remote_flag: document.getElementById('data_45').querySelector('select').value,
+    };
+
+    // 将数据转换为 JSON 格式
+    var jsonData = JSON.stringify(formData);
+
+    // 创建一个 XMLHttpRequest 对象
+    var xhr = new XMLHttpRequest();
+
+    // 配置请求，使用 POST 方法，将数据发送到指定的服务器端 URL
+    xhr.open('POST', 'http://localhost:5000/predict', true);
+    
+    // 设置请求头，告诉服务器发送的是 JSON 数据
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    // 处理请求完成后的回调函数
+    xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            // 请求成功
+            console.log('请求成功:', xhr.responseText);
+
+            // 尝试将返回的 JSON 字符串解析为 JavaScript 对象
+            try {
+                var responseData = JSON.parse(xhr.responseText);
+                console.log('后端返回的数据:', responseData);
+
+                // 在页面上显示返回的数据
+                displayResult(responseData.result);
+            } catch (error) {
+                console.error('无法解析后端返回的 JSON:', error);
+            }
+        } else {
+            // 请求失败
+            console.error('请求失败:', xhr.statusText);
+        }
+    };
+    // 处理网络错误
+    xhr.onerror = function () {
+        console.error('网络错误');
+    };
+
+    // 发送请求，将 JSON 数据作为请求体发送到服务器
+    xhr.send(jsonData);
+}
+function displayResult(result) {
+    // 获取显示结果的元素（这里假设有一个 id 为 'resultContainer' 的元素）
+    var resultContainer = document.getElementById('resultContainer');
+    if(result)
+    // 更新元素的内容，显示返回的结果
+    resultContainer.innerText = '预测结果: ' + '您可能存在心理健康问题,希望能引起你的重视,谢谢';
+    else
+    resultContainer.innerText = '预测结果: ' + '您应该不存在心理健康问题,请不用过分担心,谢谢';
+}
+
+        function generateJSON() {
+            var formData = {
+                self_empl_flag: document.getElementById('data_01').querySelector('input[name="Q1"]:checked').value,
+                comp_no_empl: document.getElementById('data_02').querySelector('select').value,
+                tech_comp_flag: document.getElementById('data_03').querySelector('input[name="Q3"]:checked').value,
+                mh_coverage_flag: document.getElementById('data_04').querySelector('select').value,
+                mh_coverage_awareness_flag: document.getElementById('data_05').querySelector('select').value,
+                mh_employer_discussion: document.getElementById('data_06').querySelector('select').value,
+                mh_resources_provided: document.getElementById('data_07').querySelector('select').value,
+                mh_anonimity_flag: document.getElementById('data_08').querySelector('select').value,
+                mh_medical_leave: document.getElementById('data_09').querySelector('select').value,
+                mh_discussion_neg_impact: document.getElementById('data_10').querySelector('select').value,
+                ph_discussion_neg_impact: document.getElementById('data_11').querySelector('select').value,
+                mh_discussion_cowork: document.getElementById('data_12').querySelector('select').value,
+                mh_discussion_supervis: document.getElementById('data_13').querySelector('select').value,
+                mh_eq_ph_employer: document.getElementById('data_14').querySelector('select').value,
+                mh_conseq_coworkers: document.getElementById('data_15').querySelector('select').value,
+                prev_employers_flag: document.getElementById('data_16').querySelector('input[name="Q16"]:checked').value,
+                prev_mh_benefits: document.getElementById('data_17').querySelector('select').value,
+                prev_mh_benefits_awareness: document.getElementById('data_18').querySelector('select').value,
+                prev_mh_discussion: document.getElementById('data_19').querySelector('select').value,
+                prev_mh_resources: document.getElementById('data_20').querySelector('select').value,
+                prev_mh_anonimity: document.getElementById('data_21').querySelector('select').value,
+                prev_mh_discuss_neg_conseq: document.getElementById('data_22').querySelector('select').value,
+                prev_ph_discuss_neg_conseq: document.getElementById('data_23').querySelector('select').value,
+                prev_mh_discussion_cowork: document.getElementById('data_24').querySelector('select').value,
+                prev_mh_discussion_supervisor: document.getElementById('data_25').querySelector('select').value,
+                prev_mh_importance_employer: document.getElementById('data_26').querySelector('select').value,
+                prev_mh_conseq_coworkers: document.getElementById('data_27').querySelector('select').value,
+                future_ph_specification: document.getElementById('data_28').querySelector('input[name="Q28"]:checked').value,
+                "why/ why_not": document.getElementById('text_28').value,
+                future_mh_specification: document.getElementById('data_29').querySelector('input[name="Q29"]:checked').value,
+                "why / why_not2": document.getElementById('text_29').value,
+                mh_hurt_on_career: document.getElementById('data_30').querySelector('select').value,
+                mh_neg_view_cowork: document.getElementById('data_31').querySelector('select').value,
+                "mh_sharing_friends / fam_flag": document.getElementById('data_32').querySelector('select').value,
+                mh_bad_response_workplace: document.getElementById('data_33').querySelector('select').value,
+                mh_family_hist: document.getElementById('data_34').querySelector('select').value,
+                mh_disorder_past: document.getElementById('data_35').querySelector('select').value,
+                mh_disorder_current: document.getElementById('data_36').querySelector('select').value,
+                mh_diagnos_proffesional: document.getElementById('data_37').querySelector('select').value,
+                mh_sought_proffes_treatm: document.getElementById('data_38').querySelector('input[name="Q38"]:checked').value,
+                mh_eff_treat_impact_on_work: document.getElementById('data_39').querySelector('select').value,
+                mh_not_eff_treat_impact_on_work: document.getElementById('data_40').querySelector('select').value,
+                sex: document.getElementById('data_41').querySelector('input[name="Q41"]:checked').value,
+
+                province_live: document.getElementById('province1').value,
+                city_live: document.getElementById('city1').value,
+
+                province_work: document.getElementById('province2').value,
+                city_work: document.getElementById('city2').value,
+
+
+                work_position: document.getElementById('data_44').querySelector('select').value,
+                remote_flag: document.getElementById('data_45').value,
+
+        };
+
+        var jsonOutput = JSON.stringify(formData, null, 2);
+            
+        // 在页面上显示JSON数据
+        // document.getElementById('jsonOutput').textContent = jsonOutput;
+        return jsonOutput;
+        }
+    </script>
+</body>
+
+</html>
